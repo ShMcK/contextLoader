@@ -1,6 +1,6 @@
 {
   "name": "test-context",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "context loader for unit tests",
   "main": "context.js",
   "scripts": {
