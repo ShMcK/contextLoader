@@ -1,0 +1,19 @@
+{
+  "name": "context",
+  "version": "1.0.0",
+  "description": "context loader for unit tests",
+  "main": "context.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShMcK/contextLoader.git"
+  },
+  "author": "shmck <shawn.j.mckay@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShMcK/contextLoader/issues"
+  },
+  "homepage": "https://github.com/ShMcK/contextLoader#readme"
+}
