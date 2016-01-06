@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ShMcK/contextLoader.git"
+    "url": "git+https://github.com/ShMcK/test-context.git"
   },
   "author": "shmck <shawn.j.mckay@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ShMcK/contextLoader/issues"
+    "url": "https://github.com/ShMcK/test-context/issues"
   },
-  "homepage": "https://github.com/ShMcK/contextLoader#readme"
+  "homepage": "https://github.com/ShMcK/test-context#readme"
 }
