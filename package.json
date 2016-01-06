@@ -1,6 +1,6 @@
 {
   "name": "test-context",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "context loader for unit tests",
   "main": "context.js",
   "scripts": {
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ShMcK/test-context/issues"
   },
-  "homepage": "https://github.com/ShMcK/test-context#readme"
+  "homepage": "https://github.com/ShMcK/test-context#readme",
+  "dependencies": {
+    "typescript": "^1.7.5"
+  }
 }

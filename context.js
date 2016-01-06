@@ -3,26 +3,34 @@ var vm = require('vm');
 
 /**
  * load context
- * runs a test within the context of another file
+ * prepares a file for mocha by running it
  * pathToContext: a relative path to the file
  */
 module.exports = function loadContext(pathToContext) {
+  var context;
   var fileType = getExtension(pathToContext);
-
-  console.log('ext', fileType);
 
   switch (fileType) {
     case '.json':
     case '.js':
-      var context = fs.readFileSync(pathToContext);
-      vm.runInThisContext(context);
-      return;
+      context = fs.readFileSync(pathToContext);
+      break;
+
+    case '.ts':
+      var ts = require('./compilers/ts.js');
+      context = ts(fs.readFileSync(pathToContext));
+      break;
+
+    case '.coffee': // no support yet
+    case '.jsx': // no support yet
 
     default:
       var error = 'File type ' + fileType + ' not supported. Cannot load unit test from context.';
       console.log(error);
       throw (error);
   }
+  // run test file with provided file context
+  vm.runInThisContext(context);
 };
 
 function getExtension(string) {
