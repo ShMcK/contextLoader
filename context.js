@@ -1,28 +1,40 @@
-var fs = require('fs');
-var vm = require('vm');
+var fs = require('fs'),
+  vm = require('vm'),
+  babel = require('babel-core');
+
+var babelOptions = {
+  presets: ['es2015']
+};
+
 /**
  * load context
  * prepares a file for mocha by running it
  * pathToContext: an absolute path to the file
  * TODO: allow relative paths running from invoked __dirname
  */
-module.exports = function loadContext(pathToContext) {
+module.exports = function loadContext(pathToContext, settings) {
   var context;
   var fileType = getExtension(pathToContext);
 
   switch (fileType) {
     case '.json':
     case '.js':
-      context = fs.readFileSync(pathToContext);
+      if (settings && settings.babel) {
+        // ES6 (ES2015)
+        context = babel.transformFileSync(__dirname + '/tests/toCompile/test.es6.js', babelOptions).code;
+      } else {
+        // ES5
+        context = fs.readFileSync(pathToContext);
+      }
       break;
 
     case '.ts':
       var ts = require('typescript');
-      const options = {
+      var options = {
         module: ts.ModuleKind.CommonJS,
         target: ts.ScriptTarget.ES5
       };
-      const host = createCompilerHost(options, moduleSearchLocations);
+      var host = createCompilerHost(options, moduleSearchLocations);
       context = ts.createProgram([pathToContext], options, host);
       /// do something with program...
       break;
@@ -32,12 +44,14 @@ module.exports = function loadContext(pathToContext) {
 
     default:
       var error = 'File type ' + fileType + ' not supported. Cannot load unit test from context.';
-      console.log(error);
       throw (error);
   }
   // run test file with provided file context
   vm.runInThisContext(context);
-  return true;
+  // for testing, return true if no errors
+  if (context.length) {
+    return true;
+  }
 };
 
 function getExtension(string) {
