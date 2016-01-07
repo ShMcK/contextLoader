@@ -4,7 +4,7 @@
   "description": "context loader for unit tests",
   "main": "context.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,9 @@
   "homepage": "https://github.com/ShMcK/test-context#readme",
   "dependencies": {
     "typescript": "^1.7.5"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
   }
 }

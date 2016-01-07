@@ -1,10 +1,10 @@
 var fs = require('fs');
 var vm = require('vm');
-
 /**
  * load context
  * prepares a file for mocha by running it
- * pathToContext: a relative path to the file
+ * pathToContext: an absolute path to the file
+ * TODO: allow relative paths running from invoked __dirname
  */
 module.exports = function loadContext(pathToContext) {
   var context;
@@ -17,8 +17,14 @@ module.exports = function loadContext(pathToContext) {
       break;
 
     case '.ts':
-      var ts = require('./compilers/ts.js');
-      context = ts(fs.readFileSync(pathToContext));
+      var ts = require('typescript');
+      const options = {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES5
+      };
+      const host = createCompilerHost(options, moduleSearchLocations);
+      context = ts.createProgram([pathToContext], options, host);
+      /// do something with program...
       break;
 
     case '.coffee': // no support yet
@@ -31,6 +37,7 @@ module.exports = function loadContext(pathToContext) {
   }
   // run test file with provided file context
   vm.runInThisContext(context);
+  return true;
 };
 
 function getExtension(string) {
