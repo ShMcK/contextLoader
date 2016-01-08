@@ -1,15 +1,19 @@
 var fs = require('fs'),
   vm = require('vm'),
   babel = require('babel-core'),
-  ts = require('typescript');
-
-var babelOptions = {
+  babelOptions = {
     presets: ['es2015']
   },
+  ts = require('typescript'),
   tsOptions = {
     module: 'commonjs',
     target: 'ES5'
   };
+
+function getExtension(string) {
+  var extensionRegex = /\.[0-9a-z]+$/i;
+  return extensionRegex.exec(string)[0];
+}
 
 /**
  * load context
@@ -52,13 +56,8 @@ module.exports = function loadContext(pathToContext, settings) {
   }
   // run test file with provided file context
   vm.runInThisContext(context);
-  // for testing, return true if no errors
+  // return true if no errors
   if (context.length) {
     return true;
   }
 };
-
-function getExtension(string) {
-  var extensionRegex = /\.[0-9a-z]+$/i;
-  return extensionRegex.exec(string)[0];
-}
