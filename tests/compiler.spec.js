@@ -13,7 +13,9 @@ describe('compiler', function() {
   });
 
   it('compiles es6 files without throwing', function() {
-    var settings = { babel: true };
+    var settings = {
+      babel: true
+    };
     var loaded = loadContext(__dirname + '/toCompile/test.es6.js', settings);
     expect(loaded).to.be.true;
   });
@@ -23,8 +25,28 @@ describe('compiler', function() {
     expect(loaded).to.be.true;
   });
 
-  xit('compiles coffee files without throwing', function() {
-    var loaded = loadContext(__dirname + '/toCompile/test.coffee');
+});
+
+describe('compiler options', function() {
+
+  it('passes in babel compiler options', function() {
+    var settings = {
+      babel: true,
+      babelOptions: {
+        comments: false
+      }
+    };
+    var loaded = loadContext(__dirname + '/toCompile/test.es6.js', settings);
+    expect(loaded).to.be.true;
+  });
+
+  it('passes in typescript compiler options', function() {
+    var settings = {
+      tsOptions: {
+        removeComments: true
+      }
+    };
+    var loaded = loadContext(__dirname + '/toCompile/test.ts', settings);
     expect(loaded).to.be.true;
   });
 

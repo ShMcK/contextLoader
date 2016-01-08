@@ -4,43 +4,47 @@ var fs = require('fs'),
   ts = require('typescript');
 
 var babelOptions = {
-  presets: ['es2015']
-};
-var tsOptions = {
-  noImplicitAny: true,
-  module: 'commonjs',
-  target: 'ES5'
-};
+    presets: ['es2015']
+  },
+  tsOptions = {
+    module: 'commonjs',
+    target: 'ES5'
+  };
 
 /**
  * load context
  * prepares a file for mocha by running it
  * pathToContext: an absolute path to the file
- * TODO: allow relative paths running from invoked __dirname
+ * TODO: allow relative paths running from invoked __dirname context
  */
 module.exports = function loadContext(pathToContext, settings) {
   var context;
   var fileType = getExtension(pathToContext);
+  var fileContents = fs.readFileSync(pathToContext, 'utf8');
 
   switch (fileType) {
     case 'json':
     case '.js':
       if (settings && settings.babel) {
-        // ES6 (ES2015)
-        context = babel.transformFileSync(__dirname + '/tests/toCompile/test.es6.js', babelOptions).code;
+        // ES6 (ES2015) (using Babel)
+        var options = babelOptions;
+        if (settings.babelOptions) {
+          options = Object.assign(options, settings.babelOptions);
+        }
+        context = babel.transform(fileContents, options).code;
       } else {
         // ES5
-        context = fs.readFileSync(pathToContext);
+        context = fileContents;
       }
       break;
 
     case '.ts':
-      var fileContents = fs.readFileSync(pathToContext, 'utf8');
-      context = ts.transpile(fileContents, tsOptions);
+      var options = tsOptions;
+      if (settings && settings.tsOptions) {
+        options = Object.assign(options, settings.tsOptions);
+      }
+      context = ts.transpile(fileContents, options);
       break;
-
-    case '.coffee': // no support yet
-    case '.jsx': // no support yet
 
     default:
       var error = 'File type ' + fileType + ' not supported. Cannot load unit test from context.';

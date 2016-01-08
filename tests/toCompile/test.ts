@@ -4,3 +4,4 @@ let b = function(): string {
 };
 
 b();
+// comment
