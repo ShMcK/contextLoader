@@ -1,9 +1,15 @@
 var fs = require('fs'),
   vm = require('vm'),
-  babel = require('babel-core');
+  babel = require('babel-core'),
+  ts = require('typescript');
 
 var babelOptions = {
   presets: ['es2015']
+};
+var tsOptions = {
+  noImplicitAny: true,
+  module: 'commonjs',
+  target: 'ES5'
 };
 
 /**
@@ -17,7 +23,7 @@ module.exports = function loadContext(pathToContext, settings) {
   var fileType = getExtension(pathToContext);
 
   switch (fileType) {
-    case '.json':
+    case 'json':
     case '.js':
       if (settings && settings.babel) {
         // ES6 (ES2015)
@@ -29,14 +35,8 @@ module.exports = function loadContext(pathToContext, settings) {
       break;
 
     case '.ts':
-      var ts = require('typescript');
-      var options = {
-        module: ts.ModuleKind.CommonJS,
-        target: ts.ScriptTarget.ES5
-      };
-      var host = createCompilerHost(options, moduleSearchLocations);
-      context = ts.createProgram([pathToContext], options, host);
-      /// do something with program...
+      var fileContents = fs.readFileSync(pathToContext, 'utf8');
+      context = ts.transpile(fileContents, tsOptions);
       break;
 
     case '.coffee': // no support yet

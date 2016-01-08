@@ -18,7 +18,7 @@ describe('compiler', function() {
     expect(loaded).to.be.true;
   });
 
-  xit('compiles ts files without throwing', function() {
+  it('compiles ts files without throwing', function() {
     var loaded = loadContext(__dirname + '/toCompile/test.ts');
     expect(loaded).to.be.true;
   });
