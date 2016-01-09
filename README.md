@@ -30,8 +30,8 @@ function addOne(x) {
 var expect = require('chai').expect;
 // load 'test-context' module
 var context = require('test-context');
-// currently only works with absolute paths
-context(__dirname + '/file.js');
+// pass in a relative path
+context('./file.js');
 
 describe('addOne', function() {
   it('increments the input', function() {
@@ -53,7 +53,7 @@ var expect = require('chai').expect;
 var context = require('test-context');
 // ES6 requires an additional parameter { babel: true }
 // pass in Babel options by adding { babelOptions: { ... } }
-context(__dirname + '/file.js', { babel: true });
+context('./file.js', { babel: true });
 
 describe('addOne', function() {
   it('increments the input', function() {
@@ -74,7 +74,7 @@ const addOne = (x: number): number => x + 1;
 var expect = require('chai').expect;
 var context = require('test-context');
 // pass in ts options by adding { tsOptions: { ... } }
-context(__dirname + '/file.ts');
+context('./file.ts');
 
 describe('addOne', function() {
   it('increments the input', function() {
