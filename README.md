@@ -53,6 +53,7 @@ var expect = require('chai').expect;
 var context = require('test-context');
 // ES6 requires an additional parameter { babel: true }
 // pass in Babel options by adding { babelOptions: { ... } }
+// or create a .babelrc file
 context('./file.js', { babel: true });
 
 describe('addOne', function() {
@@ -74,6 +75,7 @@ const addOne = (x: number): number => x + 1;
 var expect = require('chai').expect;
 var context = require('test-context');
 // pass in ts options by adding { tsOptions: { ... } }
+// or create a tsconfig.json file
 context('./file.ts');
 
 describe('addOne', function() {

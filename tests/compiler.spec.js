@@ -20,6 +20,14 @@ describe('compiler', function() {
     expect(loaded).to.be.true;
   });
 
+  it('compiles jsx files without throwing', function() {
+    var settings = {
+      babel: true
+    };
+    var loaded = loadContext('./toCompile/test.jsx', settings);
+    expect(loaded).to.be.true;
+  });
+
   it('compiles ts files without throwing', function() {
     var loaded = loadContext('./toCompile/test.ts');
     expect(loaded).to.be.true;

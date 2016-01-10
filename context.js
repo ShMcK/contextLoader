@@ -39,7 +39,8 @@ module.exports = function loadContext(pathToContext, settings) {
   var fileType = getExtension(pathToContext);
 
   switch (fileType) {
-    case 'json':
+    case '.jsx':
+    case '.json':
     case '.js':
       if (settings && settings.babel) {
         // ES6 (ES2015) (using Babel)
