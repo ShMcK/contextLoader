@@ -2,7 +2,7 @@
 
 Used for loading unit tests in a given file context.
 
-This allows running tests that load another file as their context. The result is the same as if your unit tests were written at the bottom of that file. Files are pre-compiled (see 'supported formats');
+This allows running tests within another files context. The result is as if your unit tests were written at the bottom of that the specified file. Files are pre-compiled (see 'supported formats');
 
 For examples, see the `/tests` directory.
 
@@ -12,6 +12,7 @@ But globals are bad, right? Why make this? I need this functionality for [a proj
 
   * ES5
   * ES6 (Babel)
+  * JSX
   * Typescript
 
 ### Examples (using Mocha & Chai)
